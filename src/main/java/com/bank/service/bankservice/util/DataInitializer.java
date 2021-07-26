@@ -4,11 +4,10 @@ import com.bank.service.bankservice.model.Role;
 import com.bank.service.bankservice.model.User;
 import com.bank.service.bankservice.service.RoleService;
 import com.bank.service.bankservice.service.UserService;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
 import java.time.LocalDate;
 import java.util.Set;
+import javax.annotation.PostConstruct;
+import org.springframework.stereotype.Service;
 
 @Service
 public class DataInitializer {
@@ -26,10 +25,6 @@ public class DataInitializer {
         adminRole.setName(Role.RoleName.ADMIN);
         Role savedAdminRole = roleService.save(adminRole);
 
-        Role userRole = new Role();
-        userRole.setName(Role.RoleName.USER);
-        Role savedUserRole = roleService.save(userRole);
-
         User admin = new User();
         admin.setName("admin");
         admin.setPassword("admin123");
@@ -38,6 +33,10 @@ public class DataInitializer {
         admin.setDateOfBirth(LocalDate.now());
         admin.setRoles(Set.of(savedAdminRole));
         userService.save(admin);
+
+        Role userRole = new Role();
+        userRole.setName(Role.RoleName.USER);
+        Role savedUserRole = roleService.save(userRole);
 
         User user = new User();
         user.setName("Stanislav");

@@ -1,12 +1,13 @@
-package com.bank.service.bankservice.service;
+package com.bank.service.bankservice.service.impl;
 
 import com.bank.service.bankservice.exception.DataProcessingException;
 import com.bank.service.bankservice.model.User;
 import com.bank.service.bankservice.repository.UserRepository;
+import com.bank.service.bankservice.service.UserService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository repository;
 
     public UserServiceImpl(UserRepository repository) {

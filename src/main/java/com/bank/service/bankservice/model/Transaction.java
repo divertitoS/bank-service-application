@@ -1,15 +1,20 @@
 package com.bank.service.bankservice.model;
 
-import com.bank.service.bankservice.service.RoleService;
-import com.bank.service.bankservice.service.UserService;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
@@ -19,10 +24,10 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "account_from")
+    @JoinColumn(name = "account_from")
     @ManyToOne(fetch = FetchType.LAZY)
     private Account accountFrom;
-    @Column(name = "account_to")
+    @JoinColumn(name = "account_to")
     @ManyToOne(fetch = FetchType.LAZY)
     private Account accountTo;
     private BigDecimal amount;

@@ -1,13 +1,13 @@
-package com.bank.service.bankservice.service;
+package com.bank.service.bankservice.service.impl;
 
 import com.bank.service.bankservice.exception.DataProcessingException;
 import com.bank.service.bankservice.model.Account;
 import com.bank.service.bankservice.model.Currency;
 import com.bank.service.bankservice.repository.AccountRepository;
-import org.springframework.stereotype.Service;
-
+import com.bank.service.bankservice.service.AccountService;
 import java.math.BigDecimal;
 import java.util.List;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AccountServiceImpl implements AccountService {

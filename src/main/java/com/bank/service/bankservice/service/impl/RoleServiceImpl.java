@@ -1,8 +1,9 @@
-package com.bank.service.bankservice.service;
+package com.bank.service.bankservice.service.impl;
 
 import com.bank.service.bankservice.exception.DataProcessingException;
 import com.bank.service.bankservice.model.Role;
 import com.bank.service.bankservice.repository.RoleRepository;
+import com.bank.service.bankservice.service.RoleService;
 import org.springframework.stereotype.Service;
 
 @Service

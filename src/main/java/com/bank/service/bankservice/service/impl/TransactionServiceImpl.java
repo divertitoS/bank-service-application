@@ -1,18 +1,20 @@
-package com.bank.service.bankservice.service;
+package com.bank.service.bankservice.service.impl;
 
 import com.bank.service.bankservice.model.Account;
 import com.bank.service.bankservice.model.Transaction;
 import com.bank.service.bankservice.repository.TransactionRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.bank.service.bankservice.service.AccountService;
+import com.bank.service.bankservice.service.TransactionService;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class TransactionServiceImpl implements TransactionService {
     private final TransactionRepository repository;
     private final AccountService accountService;
@@ -65,8 +67,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<Transaction> getAllByAccount(int page, int size, Account account) {
-        Pageable pageRequest = PageRequest.of(page, size);
         Sort sortByDate = Sort.by(Sort.Direction.DESC, "date");
-        return repository.getAllByAccount(account, pageRequest, sortByDate);
+        Pageable pageRequest = PageRequest.of(page, size, sortByDate);
+        return repository.getAllByAccount(account, pageRequest);
     }
 }
