@@ -20,8 +20,8 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role findByName(Role.RoleName name) {
-        return repository.findByName(name).orElseThrow(() ->
+    public Role getByName(Role.RoleName name) {
+        return repository.findRoleByName(name).orElseThrow(() ->
                 new DataProcessingException("Role named " + name.toString() + " does not exist"));
     }
 }

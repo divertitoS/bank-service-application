@@ -21,17 +21,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "transactions")
 public class Transaction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @JoinColumn(name = "account_from")
     @ManyToOne(fetch = FetchType.LAZY)
     private Account accountFrom;
+
     @JoinColumn(name = "account_to")
     @ManyToOne(fetch = FetchType.LAZY)
     private Account accountTo;
+
     private BigDecimal amount;
+
     private LocalDateTime date;
+
     @Column(name = "operation_type")
     @Enumerated(EnumType.STRING)
     private Operation operationType;

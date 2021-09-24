@@ -5,5 +5,5 @@ import com.bank.service.bankservice.model.Role;
 public interface RoleService {
     Role save(Role role);
 
-    Role findByName(Role.RoleName name);
+    Role getByName(Role.RoleName name);
 }

@@ -7,7 +7,8 @@ import com.bank.service.bankservice.service.AccountService;
 import com.bank.service.bankservice.service.TransactionService;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.*;
+
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -44,7 +45,7 @@ public class TransactionServiceImpl implements TransactionService {
         BigDecimal newRecipientAccountBalance = recipientAccountBalance.add(amount);
         recipientAccount.setBalance(newRecipientAccountBalance);
 
-        accountService.saveAll(List.of(senderAccount, recipientAccount));
+        accountService.saveAll(Set.of(senderAccount, recipientAccount));
 
         Transaction senderTransaction = new Transaction(
                 senderAccount,
@@ -62,7 +63,7 @@ public class TransactionServiceImpl implements TransactionService {
                 Transaction.Operation.INCOMING
         );
 
-        saveAll(List.of(senderTransaction, recipientTransaction));
+        saveAll(Set.of(senderTransaction, recipientTransaction));
     }
 
     @Override

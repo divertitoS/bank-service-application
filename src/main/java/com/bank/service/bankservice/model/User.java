@@ -16,17 +16,24 @@ import lombok.Data;
 @Entity
 @Table(name = "users")
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
+
     @Column(unique = true)
     private String email;
+
     @Column(name = "phone_number", unique = true)
     private String phoneNumber;
+
     private String password;
+
     @ManyToMany(fetch = FetchType.LAZY)
     private Set<Role> roles;
 }
