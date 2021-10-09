@@ -40,10 +40,8 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public BigDecimal getBalanceByAccountNumberAndCurrency(String accountNumber,
-                                                           Currency currency) {
-        return repository.findAccountByAccountNumberAndCurrency(accountNumber, currency)
-                .orElseThrow(() -> new DataProcessingException(
-                        "There is no account with this phone number")).getBalance();
+    public Account getByAccountNumber(String accountNumber) {
+        return repository.findAccountByAccountNumber(accountNumber).orElseThrow(() ->
+                new DataProcessingException("There is no account with this phone number"));
     }
 }

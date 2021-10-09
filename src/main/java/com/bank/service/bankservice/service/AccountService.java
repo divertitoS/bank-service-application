@@ -14,5 +14,5 @@ public interface AccountService {
 
     BigDecimal getBalanceByAccountNumber(String accountNumber);
 
-    BigDecimal getBalanceByAccountNumberAndCurrency(String accountNumber, Currency currency);
+    Account getByAccountNumber(String accountNumber);
 }

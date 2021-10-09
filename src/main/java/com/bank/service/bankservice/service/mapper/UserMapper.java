@@ -1,7 +1,7 @@
 package com.bank.service.bankservice.service.mapper;
 
-import com.bank.service.bankservice.dto.UserRequestDto;
-import com.bank.service.bankservice.dto.UserResponseDto;
+import com.bank.service.bankservice.dto.request.UserRequestDto;
+import com.bank.service.bankservice.dto.response.UserResponseDto;
 import com.bank.service.bankservice.model.User;
 import org.springframework.stereotype.Component;
 

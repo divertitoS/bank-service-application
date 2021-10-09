@@ -1,4 +1,4 @@
-package com.bank.service.bankservice.dto;
+package com.bank.service.bankservice.dto.response;
 
 import com.bank.service.bankservice.model.Role;
 import lombok.Data;
