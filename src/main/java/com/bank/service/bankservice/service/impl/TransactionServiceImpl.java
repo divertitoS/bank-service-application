@@ -10,8 +10,8 @@ import com.bank.service.bankservice.service.HttpClientService;
 import com.bank.service.bankservice.service.TransactionService;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -42,7 +42,9 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public List<Transaction> transfer(Account senderAccount, Account recipientAccount, BigDecimal amount) {
+    public List<Transaction> transfer(Account senderAccount,
+                                      Account recipientAccount,
+                                      BigDecimal amount) {
         Currency senderAccountCurrency = senderAccount.getCurrency();
         Currency recipientAccountCurrency = recipientAccount.getCurrency();
 
@@ -51,12 +53,17 @@ public class TransactionServiceImpl implements TransactionService {
 
         senderAccount.setBalance(newSenderAccountBalance);
 
+        List<Transaction> transactions = new ArrayList<>();
+
         Transaction outcomingTransaction = buildTransaction(senderAccount, recipientAccount,
                 amount, Transaction.Operation.OUTCOMING);
 
+        transactions.add(outcomingTransaction);
+
         if (!senderAccountCurrency.equals(recipientAccountCurrency)) {
             ApiResponseDto apiResponseDto = httpClientService
-                    .convertCurrencyRequest(senderAccountCurrency, recipientAccountCurrency, amount);
+                    .convertCurrencyRequest(
+                            senderAccountCurrency, recipientAccountCurrency, amount);
             amount = apiResponseDto.getResult();
         }
 
@@ -70,7 +77,7 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction incomingTransaction = buildTransaction(senderAccount, recipientAccount,
                 amount, Transaction.Operation.INCOMING);
 
-        List<Transaction> transactions = List.of(outcomingTransaction, incomingTransaction);
+        transactions.add(incomingTransaction);
 
         return saveAll(transactions);
     }

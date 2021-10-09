@@ -1,10 +1,9 @@
 package com.bank.service.bankservice.dto.response;
 
-import lombok.Data;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Map;
+import lombok.Data;
 
 @Data
 public class ApiResponseDto {

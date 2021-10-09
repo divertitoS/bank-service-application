@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserInfo(Long id) {
         return repository.findById(id).orElseThrow(() ->
-                new DataProcessingException("User with identifier" + id + "does not exist"));
+                new DataProcessingException("User with identifier " + id + " does not exist"));
     }
 
     @Override

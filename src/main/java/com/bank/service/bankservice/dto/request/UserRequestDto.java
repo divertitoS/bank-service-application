@@ -1,10 +1,9 @@
 package com.bank.service.bankservice.dto.request;
 
 import com.bank.service.bankservice.model.Role;
-import lombok.Data;
-
 import java.time.LocalDate;
 import java.util.Set;
+import lombok.Data;
 
 @Data
 public class UserRequestDto {

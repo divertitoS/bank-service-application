@@ -5,6 +5,9 @@ import com.bank.service.bankservice.exception.HttpProcessingException;
 import com.bank.service.bankservice.model.Currency;
 import com.bank.service.bankservice.service.HttpClientService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.Optional;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -13,10 +16,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
-
-import java.io.*;
-import java.math.BigDecimal;
-import java.util.*;
 
 @Component
 public class HttpClientServiceImpl implements HttpClientService {
@@ -52,7 +51,8 @@ public class HttpClientServiceImpl implements HttpClientService {
             try (CloseableHttpResponse response = httpClient.execute(request)) {
                 Optional<HttpEntity> entityWrapper = Optional.ofNullable(response.getEntity());
                 String content = EntityUtils.toString(entityWrapper.orElseThrow(() ->
-                        new HttpProcessingException("Can't get a result of the http request by current url: " + url)));
+                        new HttpProcessingException(
+                                "Can't get a result of the http request by current url: " + url)));
                 apiResponseDto = objectMapper.readValue(content, ApiResponseDto.class);
             }
         } catch (IOException e) {

@@ -2,7 +2,6 @@ package com.bank.service.bankservice.service.impl;
 
 import com.bank.service.bankservice.exception.DataProcessingException;
 import com.bank.service.bankservice.model.Account;
-import com.bank.service.bankservice.model.Currency;
 import com.bank.service.bankservice.repository.AccountRepository;
 import com.bank.service.bankservice.service.AccountService;
 import java.math.BigDecimal;
@@ -42,6 +41,6 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public Account getByAccountNumber(String accountNumber) {
         return repository.findAccountByAccountNumber(accountNumber).orElseThrow(() ->
-                new DataProcessingException("There is no account with this phone number"));
+                new DataProcessingException("There is no account with this account number"));
     }
 }
