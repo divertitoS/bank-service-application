@@ -8,7 +8,7 @@ import java.util.List;
 public interface TransactionService {
     List<Transaction> saveAll(Iterable<Transaction> transactions);
 
-    void transfer(Account senderAccount, Account recipientAccount, BigDecimal amount);
+    List<Transaction> transfer(Account senderAccount, Account recipientAccount, BigDecimal amount);
 
     List<Transaction> getAllByAccount(int page, int size, Account account);
 }

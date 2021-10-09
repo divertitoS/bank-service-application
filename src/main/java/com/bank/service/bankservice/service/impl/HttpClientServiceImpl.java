@@ -1,6 +1,6 @@
 package com.bank.service.bankservice.service.impl;
 
-import com.bank.service.bankservice.dto.ApiResponseDto;
+import com.bank.service.bankservice.dto.response.ApiResponseDto;
 import com.bank.service.bankservice.exception.HttpProcessingException;
 import com.bank.service.bankservice.model.Currency;
 import com.bank.service.bankservice.service.HttpClientService;
@@ -46,7 +46,7 @@ public class HttpClientServiceImpl implements HttpClientService {
 
         HttpGet request = new HttpGet(urlWithParameters);
 
-        ApiResponseDto apiResponseDto = null;
+        ApiResponseDto apiResponseDto;
 
         try {
             try (CloseableHttpResponse response = httpClient.execute(request)) {

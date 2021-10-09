@@ -1,6 +1,6 @@
 package com.bank.service.bankservice.service.impl;
 
-import com.bank.service.bankservice.dto.ApiResponseDto;
+import com.bank.service.bankservice.dto.response.ApiResponseDto;
 import com.bank.service.bankservice.model.Account;
 import com.bank.service.bankservice.model.Currency;
 import com.bank.service.bankservice.model.Transaction;
@@ -42,12 +42,17 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     @Transactional
-    public void transfer(Account senderAccount, Account recipientAccount, BigDecimal amount) {
+    public List<Transaction> transfer(Account senderAccount, Account recipientAccount, BigDecimal amount) {
         Currency senderAccountCurrency = senderAccount.getCurrency();
         Currency recipientAccountCurrency = recipientAccount.getCurrency();
 
         BigDecimal senderAccountBalance = senderAccount.getBalance();
         BigDecimal newSenderAccountBalance = senderAccountBalance.subtract(amount);
+
+        senderAccount.setBalance(newSenderAccountBalance);
+
+        Transaction outcomingTransaction = buildTransaction(senderAccount, recipientAccount,
+                amount, Transaction.Operation.OUTCOMING);
 
         if (!senderAccountCurrency.equals(recipientAccountCurrency)) {
             ApiResponseDto apiResponseDto = httpClientService
@@ -58,9 +63,16 @@ public class TransactionServiceImpl implements TransactionService {
         BigDecimal recipientAccountBalance = recipientAccount.getBalance();
         BigDecimal newRecipientAccountBalance = recipientAccountBalance.add(amount);
 
-        senderAccount.setBalance(newSenderAccountBalance);
         recipientAccount.setBalance(newRecipientAccountBalance);
+
         accountService.saveAll(List.of(senderAccount, recipientAccount));
+
+        Transaction incomingTransaction = buildTransaction(senderAccount, recipientAccount,
+                amount, Transaction.Operation.INCOMING);
+
+        List<Transaction> transactions = List.of(outcomingTransaction, incomingTransaction);
+
+        return saveAll(transactions);
     }
 
     @Override
@@ -68,5 +80,18 @@ public class TransactionServiceImpl implements TransactionService {
         Sort sortByDate = Sort.by(Sort.Direction.DESC, "date");
         Pageable pageRequest = PageRequest.of(page, size, sortByDate);
         return repository.getAllByAccount(account, pageRequest);
+    }
+
+    private Transaction buildTransaction(Account from, Account to,
+                                         BigDecimal amount, Transaction.Operation operationType) {
+        Transaction transaction = new Transaction();
+
+        transaction.setAccountFrom(from);
+        transaction.setAccountTo(to);
+        transaction.setAmount(amount);
+        transaction.setOperationType(operationType);
+        transaction.setDate(LocalDateTime.now());
+
+        return transaction;
     }
 }
