@@ -10,13 +10,20 @@ import com.bank.service.bankservice.service.AccountService;
 import com.bank.service.bankservice.service.TransactionService;
 import com.bank.service.bankservice.service.mapper.AccountMapper;
 import com.bank.service.bankservice.service.mapper.TransactionMapper;
-import org.springframework.web.bind.annotation.*;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/accounts")
+@RestController
+@RequestMapping("/accounts")
 public class AccountController {
 
     private final TransactionService transactionService;
@@ -28,7 +35,9 @@ public class AccountController {
     private final AccountMapper accountMapper;
 
     public AccountController(TransactionService transactionService,
-                             TransactionMapper transactionMapper, AccountService accountService, AccountMapper accountMapper) {
+                             TransactionMapper transactionMapper,
+                             AccountService accountService,
+                             AccountMapper accountMapper) {
         this.transactionService = transactionService;
         this.transactionMapper = transactionMapper;
         this.accountService = accountService;
@@ -57,10 +66,13 @@ public class AccountController {
         Account senderAccount = dto.getAccountFrom();
         BigDecimal amount = dto.getAmount();
 
-        List<Transaction> transactions = transactionService.transfer(senderAccount, recipientAccount, amount);
+        List<Transaction> transactions = transactionService
+                .transfer(senderAccount, recipientAccount, amount);
 
         return transactions.stream()
-                .filter(transaction -> transaction.getOperationType().equals(Transaction.Operation.OUTCOMING))
+                .filter(transaction -> transaction
+                        .getOperationType()
+                        .equals(Transaction.Operation.OUTCOMING))
                 .map(transactionMapper::mapToDto)
                 .findFirst().get();
 
@@ -73,9 +85,10 @@ public class AccountController {
     }
 
     @GetMapping("/history/{accountNumber}")
-    public List<TransactionResponseDto> getHistory(@PathVariable String accountNumber,
-                                                   @RequestParam(required = false, defaultValue = "0") int page,
-                                                   @RequestParam(required = false, defaultValue = "10") int size) {
+    public List<TransactionResponseDto> getHistory(
+            @PathVariable String accountNumber,
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int size) {
         Account account = accountService.getByAccountNumber(accountNumber);
         List<Transaction> transactions = transactionService.getAllByAccount(page, size, account);
 

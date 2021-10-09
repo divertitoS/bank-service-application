@@ -5,7 +5,6 @@ import com.bank.service.bankservice.model.User;
 import com.bank.service.bankservice.service.RoleService;
 import com.bank.service.bankservice.service.UserService;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Service;

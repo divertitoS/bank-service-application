@@ -1,10 +1,8 @@
 package com.bank.service.bankservice.dto.response;
 
 import com.bank.service.bankservice.model.Role;
-import lombok.Data;
-
-import java.time.LocalDate;
 import java.util.Set;
+import lombok.Data;
 
 @Data
 public class UserResponseDto {
@@ -13,7 +11,7 @@ public class UserResponseDto {
 
     private String name;
 
-    private LocalDate dateOfBirth;
+    private String dateOfBirth;
 
     private String email;
 
