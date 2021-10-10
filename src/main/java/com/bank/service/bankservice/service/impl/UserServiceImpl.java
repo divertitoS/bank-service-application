@@ -33,6 +33,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User findByEmail(String email) {
+        return repository.findByEmail(email).orElseThrow(() ->
+                new DataProcessingException("User with email "
+                        + email + " does not exist"));
+    }
+
+    @Override
     public void remove(Long id) {
         repository.deleteById(id);
     }
